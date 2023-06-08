@@ -2,7 +2,7 @@ const myAccountPage = require('../pages/MinhaContaPage')
 const productsPage = require('../pages/ProdutosPage')
 const productElements = require('../pages/Elements/ProdutosElements')
 const cartPage = require('../pages/CarrinhoPage')
-const productDatas = require('../fixtures/productDatas.json')
+const productDatas = require('../fixtures/dadosProduto.json')
 import {
     After, Given
 } from 'cypress-cucumber-preprocessor/steps'

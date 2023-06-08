@@ -1,38 +1,44 @@
-const myAccountPage = require('../pages/MinhaContaPage')
-const productDatas = require('../fixtures/productDatas.json')
+const minhaContaPage = require('../pages/MinhaContaPage')
+
+let input
 
 Given(/^que acesse o site da EBAC-SHOP$/, () => {
-	cy.visit(Cypress.env('baseUrl'))
+	return true
 })
 
 And(/^posteriormente a página de login$/, () => {
-	return true
+	cy.visit(`${Cypress.env('baseUrl')}/minha-conta`)
 })
 
 When(/^eu inserir um usuário válido$/, () => {
-	return true
+	input = "usuario"
+	minhaContaPage.preencherInput(input, Cypress.env('email'))
 })
 
 And(/^a senha correta$/, () => {
-	return true
+	input = "senha"
+	minhaContaPage.preencherInput(input, Cypress.env('password'))
 })
 
 Then(/^farei login com sucesso$/, () => {
-	return true
+	minhaContaPage.submeterLogin()
 })
 
-And(/^serei redirecionado para a tela `minha-conta`$/, () => {
-	return true
+And(/^serei redirecionado para a área logada da tela `minha-conta`$/, () => {
+	minhaContaPage.validarQueEstaLogadoNaPaginaMinhaConta(Cypress.env('email'))
 })
 
-When(/^eu inserir o usuário "([^"]*)"$/, (usuario) => {
-	return true
+When(/^eu inserir o usuário "([^"]*)"$/, (email) => {
+	input = "usuario"
+	minhaContaPage.preencherInput(input, email)
 })
 
 And(/^a senha "([^"]*)"$/, (senha) => {
-	return true
+	input = "senha"
+	minhaContaPage.preencherInput(input, senha)
 })
 
 Then(/^me será apresentada a mensagem: "([^"]*)"$/, (mensagem) => {
-	return true
+	minhaContaPage.submeterLogin()
+	minhaContaPage.validarAlertaLogin(mensagem)
 })

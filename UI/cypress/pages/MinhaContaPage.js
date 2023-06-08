@@ -1,42 +1,51 @@
 /// <reference types="cypress" />
 
-const data = require('../fixtures/data.json')
-const myAccountElements = require('./Elements/MinhaContaElements')
+const minhaContaElements = require('./Elements/MinhaContaElements')
 
-class MyAccountPage {
+class MinhaContaPage {
 
-    typeEmailAndPwdInTheRegisterArea() {
-        const emailAdress = `testlgc${Math.floor(Math.random() * 10000)}@test.com`
-        data.registerEmailadress = emailAdress
+    preencherInput(input, valor) {
+        let seletorIpt
+        input === "usuario" ? seletorIpt = minhaContaElements.iptLoginEmail() : seletorIpt = minhaContaElements.iptLoginPwd()
 
-        cy.get(myAccountElements.iptRegisterEmail()).type(emailAdress, { force: true })
-        cy.get(myAccountElements.iptRegisterPwd()).type(Cypress.env('password'), { force: true })
+        cy.get(seletorIpt)
+            .scrollIntoView()
+            .clear()
+            .type(valor, { force: true })
+
+        cy.get(seletorIpt)
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.value', valor)
     }
 
-    submitRegister() {
-        cy.get(myAccountElements.btnRegister()).click()
+    submeterLogin() {
+        cy.get(minhaContaElements.btnLogin())
+            .scrollIntoView()
+            .should('be.visible')
+            .click()
     }
 
-    headerMessageValidation() {
-        const firstPartOfEmail = data.registerEmailadress.split('@')[0]
-
-        cy.get(myAccountElements.lblWelcome())
-            .should('have.text', `Welcome ${firstPartOfEmail} !`)
+    validarAlertaLogin(mensagem) {
+        cy.get(minhaContaElements.lblAlerta())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('contain.text', mensagem)
     }
 
-    doLogin() {
-        cy.clearCookies()
-        cy.login(Cypress.env('email'), Cypress.env('password'))
-    }
+    validarQueEstaLogadoNaPaginaMinhaConta(email) {
+        const primeiraParteDoEmail = email.split('@')[0]
 
-    doUiLogin() {
-        cy.uiLogin(Cypress.env('email'), Cypress.env('password'))
-    }
+        cy.get(minhaContaElements.lblTituloMinhaConta())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.text', 'Minha conta')
 
-    accessProductsPage() {
-        cy.get(myAccountElements.lblBuy()).click()
-        cy.url().should('equal', `${Cypress.env('baseUrl')}/produtos/`)
+        cy.get(minhaContaElements.lblWelcome())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.text', `Welcome ${primeiraParteDoEmail} !`)
     }
 }
 
-module.exports = new MyAccountPage()
+module.exports = new MinhaContaPage()

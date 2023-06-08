@@ -1,10 +1,4 @@
-class MyAccountElements {
-
-    iptRegisterEmail = () => '#reg_email'
-    
-    iptRegisterPwd = () => '#reg_password'
-
-    btnRegister = () => 'input[value="Register"]'
+class MinhaContaElements {
 
     lblWelcome = () => 'a > .hidden-xs'
 
@@ -12,9 +6,13 @@ class MyAccountElements {
 
     iptLoginPwd = () => '#password'
 
-    btnLogin = () => '.woocommerce-form > .button'
+    btnLogin = () => '[name="login"]'
+
+    lblAlerta = () => '.woocommerce-error > li'
+
+    lblTituloMinhaConta = () => '.page-title'
 
     lblBuy = () => '#primary-menu > .menu-item-629 > a'
 }
 
-module.exports = new MyAccountElements()
+module.exports = new MinhaContaElements()

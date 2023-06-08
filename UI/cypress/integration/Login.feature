@@ -9,7 +9,7 @@
             Quando eu inserir um usuário válido
             E a senha correta
             Então farei login com sucesso
-            E serei redirecionado para a tela `minha-conta`
+            E serei redirecionado para a área logada da tela `minha-conta`
 
             @automatizado
             Esquema do Cenário: Tentar realizar login com dados inválidos
@@ -20,10 +20,10 @@
             Então me será apresentada a mensagem: "<mensagem>"
 
             Exemplos:
-            | usuario             | senha                          | mensagem                   |
-            | ttestslgc2@test.com | GD*peToHNJ1#c$sgk08EaYJQoiaoas | Usuário ou senha inválidos |
-            | testslgc2@test.com  | senhaIncorreta123              | Usuário ou senha inválidos |
-            | ttestslgc2@test.com | senhaIncorreta123              | Usuário ou senha inválidos |
+            | usuario             | senha                          | mensagem                                                                                 |
+            | ttestslgc2@test.com | GD*peToHNJ1#c$sgk08EaYJQoiaoas | Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário.       |
+            | testslgc2@test.com  | senhaIncorreta123              | Erro: a senha fornecida para o e-mail testslgc2@test.com está incorreta. Perdeu a senha? |
+            | ttestslgc2@test.com | senhaIncorreta123              | Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário.       |
 
             @manual
             Cenário: Tentar logar com usuário inativo

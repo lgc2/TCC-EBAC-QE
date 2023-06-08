@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const productsElements = require('./Elements/ProdutosElements')
-const productDatas = require('../fixtures/productDatas.json')
+const productDatas = require('../fixtures/dadosProduto.json')
 
 class ProductsPage {
 

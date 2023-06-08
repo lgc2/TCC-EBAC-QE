@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const cartElements = require('./Elements/CarrinhoElements')
-const productDatas = require('../fixtures/productDatas.json')
+const productDatas = require('../fixtures/dadosProduto.json')
 
 class CartPage {
     interceptRemoveProduct() {
