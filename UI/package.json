@@ -1,0 +1,28 @@
+{
+  "name": "automacao-ui-cypress-mod22",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:run": "npx cypress run",
+    "test": "npx cypress run cypress run --env TAGS=@automatizado --reporter mochawesome --reporter-options reportDir=\"cypress/results\",overwrite=false,html=false,json=true && npx mochawesome-merge \"cypress/results/*.json\" > mochawesome.json && npx marge mochawesome.json",
+    "clean-report:windows": "rd /s /q \"../UI/mochawesome-report\" \"../UI/cypress/results\" && del \"../UI/mochawesome.json\"",
+    "sorry:cypress": "npx cy2 run --record --key EBAC --parallel --ci-build-id `date +%s`"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^9.5.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.2",
+    "mochawesome-report-generator": "^6.2.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "step_definitions": "cypress/steps"
+  },
+  "dependencies": {
+    "cy2": "^3.4.1"
+  }
+}

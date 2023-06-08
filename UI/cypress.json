@@ -1,0 +1,18 @@
+{
+    "projectId": "_EBAC",
+    "env": {
+        "baseUrl": "http://lojaebac.ebaconline.art.br",
+        "email": "testslgc2@test.com",
+        "password": "GD*peToHNJ1#c$sgk08EaYJQoiaoas"
+    },
+    "testFiles": "**/*.feature",
+    "video": false,
+    "reporter": "mochawesome",
+    "reporterOptions": {
+        "reportDir": "mochawesome-report",
+        "overwrite": false,
+        "reportFilename": "index.html",
+        "html": true,
+        "json": false
+    }
+}
