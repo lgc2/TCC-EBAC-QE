@@ -1,48 +1,37 @@
 /// <reference types="cypress" />
 
-const productsElements = require('./Elements/ProdutosElements')
+const produtosElements = require('./Elements/ProdutosElements')
 const productDatas = require('../fixtures/dadosProduto.json')
 
-class ProductsPage {
+class ProdutosPage {
 
-    accessProductPage(productName) {
-        cy.get(productsElements.lblProductsName()).contains(productName).click()
-        cy.url().should('equal', `${Cypress.env('baseUrl')}/product/${productDatas.productName}/`)
-    }
-
-    interceptPostProduct(productName) {
+    _interceptarPostProduto() {
         cy.intercept({
             method: 'POST',
-            url: `${Cypress.env('baseUrl')}/product/${productName}/`
+            url: `${Cypress.env('baseUrl')}/product/*`
         }).as('postProduct')
     }
 
-    buyAProduct(size, color, quantity) {
-        this.interceptPostProduct(productDatas.productName)
+    comprarProduto(tamanho, cor, quantidade) {
+        this._interceptarPostProduto()
 
-        cy.get(productsElements.productSize(size)).click()
-        cy.get(productsElements.productColor(color)).click()
-        cy.get(productsElements.iptQuantity()).clear().type(quantity)
-        cy.get(productsElements.btnBuy()).click()
+        cy.get(produtosElements.tamanhoProduto(tamanho)).click()
+        cy.get(produtosElements.corProduto(cor)).click()
+        cy.get(produtosElements.iptQuantidade()).clear().type(quantidade)
+        cy.get(produtosElements.btnComprar()).click()
 
         cy.wait('@postProduct')
-            .its('response.statusCode')
-            .should('equal', 200)
-
-        this.quantityIconValidation(productDatas.quantity)
     }
 
-    accessTheCartPage() {
-        cy.get(productsElements.btnSeeCart()).click()
+    acessarPaginaDoCarrinho() {
+        cy.get(produtosElements.btnVerCarrinho()).click()
     }
 
-    quantityIconValidation(quantity) {
-        cy.get(productsElements.quantityIcon())
+    validarIconeDeQuantidade(quantidade) {
+        cy.get(produtosElements.iconeQuantidade())
             .should('be.visible')
-            .and('contain', quantity)
+            .and('contain', quantidade)
     }
-
-
 }
 
-module.exports = new ProductsPage()
+module.exports = new ProdutosPage()

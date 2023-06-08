@@ -1,18 +1,18 @@
 class ProductsElements {
 
-    lblProductsName = () => '.name'
+    lblNomeProduto = () => '.name'
 
-    productSize = (size) => `.button-variable-item-${size}`
+    tamanhoProduto = (size) => `.button-variable-item-${size}`
 
-    productColor = (color) => `.button-variable-item-${color}`
+    corProduto = (color) => `.button-variable-item-${color}`
 
-    iptQuantity = () => '.input-text'
+    iptQuantidade = () => '.input-text'
 
-    btnBuy = () => '.single_add_to_cart_button'
+    btnComprar = () => '.single_add_to_cart_button'
 
-    quantityIcon = () => '.dropdown-toggle > .mini-cart-items'
+    iconeQuantidade = () => '.dropdown-toggle > .mini-cart-items'
 
-    btnSeeCart = () => '.woocommerce-message > .button'
+    btnVerCarrinho = () => '.woocommerce-message > .button'
 }
 
 module.exports = new ProductsElements()

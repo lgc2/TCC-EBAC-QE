@@ -1,33 +1,13 @@
-const myAccountPage = require('../pages/MinhaContaPage')
-const productsPage = require('../pages/ProdutosPage')
-const productElements = require('../pages/Elements/ProdutosElements')
-const cartPage = require('../pages/CarrinhoPage')
-const productDatas = require('../fixtures/dadosProduto.json')
-import {
-    After, Given
-} from 'cypress-cucumber-preprocessor/steps'
-
-After({ tags: '@cartClear' }, () => {
-    cy.intercept({
-        method: 'POST',
-        url: `${Cypress.env('baseUrl')}/wp-admin/admin-ajax.php`
-    }).as('cartClear')
-
-    cy.get('.dropdown-toggle > .mini-cart-items')
-        .click()
-
-    cy.get('#cart .remove')
-        .click()
-
-    cy.wait('@cartClear')
-        .its('response.statusCode')
-        .should('equal', 200)
-})
-
-
+const produtosPage = require('../pages/ProdutosPage')
+const carrinhoPage = require('../pages/CarrinhoPage')
+const dadosProduto = require('../fixtures/dadosProduto.json')
+import homePage from '../pages/HomePage'
 
 Given(/^que eu esteja na página do carrinho$/, () => {
     cy.visit(Cypress.env('baseUrl'))
+    homePage.buscarProduto(dadosProduto.nomeProduto)
+    produtosPage.comprarProduto(dadosProduto.tamanho, dadosProduto.cor, dadosProduto.quantidade)
+    produtosPage.acessarPaginaDoCarrinho()
 })
 
 When(/^eu inserir 10 itens de um mesmo produto no carrinho$/, () => {
@@ -53,42 +33,3 @@ Then(/^o sistema não me dará um cupom de desconto$/, () => {
 And(/^verei o valor cheio na página do carrinho$/, () => {
     return true
 })
-
-// When(/^I click on the "([^"]*)" product$/, (args1) => {
-//     productsPage.accessProductPagAnd(args1)
-// })
-
-// And(/^click the Buy button, after choose the size, color and quantity$/, () => {
-//     productsPage.buyAProduct(productDatas.size, productDatas.color, productDatas.quantity)
-// })
-
-// Then(/^the product will be added to the cart$/, () => {
-//     return true
-// })
-
-// And(/^I have added a product to cart$/, () => {
-//     myAccountPage.accessProductsPagAnd()
-//     productsPage.accessProductPagAnd(productDatas.productNameInCheckoutPage)
-//     productsPage.buyAProduct(productDatas.size, productDatas.color, productDatas.quantity)
-// })
-
-// When(/^I access the cart page$/, () => {
-//     productsPage.accessTheCartPagAnd()
-// })
-
-// And(/^remove this product$/, () => {
-//     cartPage.removeProductIntheCartPagAnd()
-// })
-
-// Then(/^the cart will be empty$/, () => {
-//     cartPage.removedProductMessageValidation(productDatas.productNameInCheckoutPage)
-// })
-
-// When(/^add one more item$/, () => {
-//     cartPage.addOneMoreIten(productDatas.quantity)
-// })
-
-// Then(/^the cart will have two itens$/, () => {
-//     const newItensQuantity = productDatas.quantity + 1
-//     productsPage.quantityIconValidation(newItensQuantity)
-// })
