@@ -1,50 +1,71 @@
 /// <reference types="cypress" />
 
-const cartElements = require('./Elements/CarrinhoElements')
-const productDatas = require('../fixtures/dadosProduto.json')
+const carrinhoElements = require('./Elements/CarrinhoElements')
+class CarrinhoPage {
 
-class CartPage {
-    interceptRemoveProduct() {
-        cy.intercept({
-            method: 'GET',
-            url: `${Cypress.env('baseUrl')}/carrinho/?remove_item=*`
-        }).as('removeProduct')
+    adicionarItensProduto(quantidade) {
+        this._interceptarUpdateDeQuantidadeDeProduto()
+        this._interceptarReqAtualizacaoCarrinho()
+
+        cy.get(carrinhoElements.iptQuantidade())
+            .scrollIntoView()
+            .clear()
+            .type(quantidade)
+            .type('{enter}')
+
+        cy.wait('@updateProduto')
+        cy.wait('@atualizacaoCarrinho')
+
+        cy.get(carrinhoElements.iptQuantidade())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.value', quantidade)
     }
 
-    interceptUpdateProductQuantity() {
+    validarValoresPaginaCarrinho(quantidade, valorUnitario) {
+        const valorTotal = quantidade * valorUnitario
+
+        cy.get(carrinhoElements.lblValorTotalProduto())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.text', `R$${this._formatarValorParaReal(valorTotal)}`)
+
+        cy.get(carrinhoElements.lblValorTotalPedido())
+            .scrollIntoView()
+            .should('be.visible')
+            .and('have.text', `R$${this._formatarValorParaReal(valorTotal)}`)
+    }
+
+    validarValorMenorQue(valorReferencia) {
+        cy.get(carrinhoElements.lblValorTotalProduto())
+            .invoke('text')
+            .then((valorStr) => {
+                let textoExtraido = valorStr
+                let valorSemSimboloMoeda = textoExtraido.substring(2)
+                let valorStrParaNumber = parseFloat(valorSemSimboloMoeda.replace(',', '.'))
+
+                expect(valorStrParaNumber).lessThan(valorReferencia)
+            })
+    }
+
+    _interceptarUpdateDeQuantidadeDeProduto() {
         cy.intercept({
             method: 'POST',
             url: `${Cypress.env('baseUrl')}/carrinho/`
-        }).as('updateProduct')
+        }).as('updateProduto')
     }
 
-    removeProductIntheCartPage() {
-        this.interceptRemoveProduct()
-
-        cy.get(cartElements.btnRemove()).click()
-
-        cy.wait('@removeProduct')
-            .its('response.statusCode')
-            .should('equal', 302)
+    _interceptarReqAtualizacaoCarrinho() {
+        cy.intercept({
+            method: 'POST',
+            url: `${Cypress.env('baseUrl')}/?wc-ajax=get_refreshed_fragments`
+        }).as('atualizacaoCarrinho')
     }
 
-    removedProductMessageValidation(productName) {
-        cy.get(cartElements.removedProductMessage())
-            .should('be.visible')
-            .and('have.text', `\n\t\t“${productName}” removido. Desfazer?\t`)
-    }
-
-    addOneMoreIten(atualQuantity) {
-        this.interceptUpdateProductQuantity()
-
-        cy.get(cartElements.btnPlus()).click()
-
-        cy.wait('@updateProduct')
-            .its('response.statusCode')
-            .should('equal', 302)
-
-        cy.get(cartElements.iptQuantity()).should('have.value', (atualQuantity + 1))
+    _formatarValorParaReal(valorNumber) {
+        const valorReal = valorNumber.toLocaleString('pt-br', { minimumFractionDigits: 2 })
+        return valorReal
     }
 }
 
-module.exports = new CartPage()
+module.exports = new CarrinhoPage()

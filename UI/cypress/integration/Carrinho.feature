@@ -7,7 +7,7 @@
 
             @automatizado
             Cenário: Validar inserção de menos de 11 itens de um mesmo produto ao carrinho
-            Quando eu inserir 10 itens de um mesmo produto no carrinho
+            Quando eu inserir "10" itens de um mesmo produto no carrinho
             Então a quantidade apresentada na coluna “Quantity” será atualizada
             E os valores também serão atualizados de acordo com a nova quantidade de itens informada
 

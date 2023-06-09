@@ -1,12 +1,10 @@
-class CartElements {
+class CarrinhoElements {
 
-    btnRemove = () => '.remove > .fa'
+    iptQuantidade = () => '.quantity > .input-text'
 
-    removedProductMessage = () => '.woocommerce-message'
+    lblValorTotalProduto = () => '.product-subtotal bdi'
 
-    btnPlus = () => '.plus'
-
-    iptQuantity = () => '.quantity > .input-text'
+    lblValorTotalPedido = () => '.order-total bdi'
 }
 
-module.exports = new CartElements()
+module.exports = new CarrinhoElements()

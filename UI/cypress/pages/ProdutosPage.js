@@ -1,8 +1,6 @@
 /// <reference types="cypress" />
 
 const produtosElements = require('./Elements/ProdutosElements')
-const productDatas = require('../fixtures/dadosProduto.json')
-
 class ProdutosPage {
 
     _interceptarPostProduto() {
