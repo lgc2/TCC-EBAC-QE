@@ -2,7 +2,7 @@ name: ebac-tests-ui-cy-ci
 
 on:
   push:
-    branches: [ main ]
+    branches: [ ci-ui ]
     
   workflow_dispatch:
   
