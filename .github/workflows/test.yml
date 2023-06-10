@@ -26,6 +26,9 @@ jobs:
       - name: Cypress run
         run: npm t
 
+      - name: Rename Report
+        run: mv ./mochawesome-report/mochawesome.html ./mochawesome-report/index.html
+
       - name: Publish Report
         uses: peaceiris/actions-gh-pages@v3
         with:
