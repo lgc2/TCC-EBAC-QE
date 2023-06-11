@@ -1,8 +1,8 @@
-name: ebac-tests-ui-cy-ci
+name: tcc-ebac-qe-ci
 
 on:
   push:
-    branches: [ main ]
+    branches: [ ci-ui ]
     
   workflow_dispatch:
   
@@ -24,7 +24,10 @@ jobs:
         run: npm install
 
       - name: Cypress run
-        run: npm run cy:run
+        run: npm t
+
+      - name: Rename Report
+        run: mv ./mochawesome-report/mochawesome.html ./mochawesome-report/index.html
 
       - name: Publish Report
         uses: peaceiris/actions-gh-pages@v3

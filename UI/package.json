@@ -1,17 +1,17 @@
 {
-  "name": "automacao-ui-cypress-mod22",
+  "name": "tcc-ebac-qe-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cy:run": "npx cypress run",
+    "cy:run": "npx cypress run --env TAGS=@automatizado",
     "cy:open": "npx cypress open --env TAGS=@automatizado",
     "test": "npx cypress run --env TAGS=@automatizado --reporter mochawesome --reporter-options reportDir=\"cypress/results\",overwrite=false,html=false,json=true && npx mochawesome-merge \"cypress/results/*.json\" > mochawesome.json && npx marge mochawesome.json",
     "clean-report:windows": "rd /s /q \"../UI/mochawesome-report\" \"../UI/cypress/results\" && del \"../UI/mochawesome.json\"",
     "sorry:cypress": "npx cy2 run --record --key EBAC --parallel --ci-build-id `date +%s`"
   },
   "keywords": [],
-  "author": "",
+  "author": "Luiz Gustavo",
   "license": "ISC",
   "devDependencies": {
     "cypress": "^9.5.0",
