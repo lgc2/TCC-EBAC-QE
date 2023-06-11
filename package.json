@@ -1,5 +1,5 @@
 {
-  "name": "automacao-ui-cypress-mod22",
+  "name": "tcc-ebac-qe-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "sorry:cypress": "npx cy2 run --record --key EBAC --parallel --ci-build-id `date +%s`"
   },
   "keywords": [],
-  "author": "",
+  "author": "Luiz Gustavo",
   "license": "ISC",
   "devDependencies": {
     "cypress": "^9.5.0",

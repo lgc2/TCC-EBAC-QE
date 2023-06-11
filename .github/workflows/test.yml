@@ -1,4 +1,4 @@
-name: ebac-tests-ui-cy-ci
+name: tcc-ebac-qe-ci
 
 on:
   push:
