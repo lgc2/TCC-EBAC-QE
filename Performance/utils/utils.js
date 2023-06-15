@@ -3,6 +3,8 @@ export default class Utils {
         switch (process.env.NODE_ENV) {
             case 'production':
                 return `http://lojaebac.ebaconline.art.br`
+            default:
+                return ''
         }
     }
 }

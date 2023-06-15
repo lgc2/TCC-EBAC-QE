@@ -4,10 +4,8 @@ import Coupons from '../requests/coupons.request.js';
 
 export const options = {
   stages: [
-    { duration: '10s', target: 10 },
-    { duration: '5s', target: 20 },
-    { duration: '10s', target: 10 },
-    { duration: '5s', target: 0 }
+    { duration: '20s', target: 20 },
+    { duration: '100s', target: 20 },
   ],
   thresholds: {
     http_req_duration: ['p(99) < 6000']
@@ -16,8 +14,13 @@ export const options = {
 
 export default function () {
   let coupons = new Coupons()
+  const couponId = coupons.listAllAndReturnTheFirstCoupon()
 
   group('list all coupons', () => {
     coupons.listAll()
+  })
+
+  group('list specific coupon', () => {
+    coupons.listSpecificCoupon(couponId)
   })
 }
